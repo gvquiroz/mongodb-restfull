@@ -3,6 +3,12 @@
 ## Description
 Elastcsearch RESTful api alike for mongo db.
 
+1. Install dependencies by executing **npm Install**
+2. Run api by executing **DEBUG=app NODE_ENV=test node server.js**
+
+Debug option is for loggin porpuses
+Env option is to use in memory mongodb or connection in properties.json url 
+
 ## Methods
 
 ### Find record by id

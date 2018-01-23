@@ -9,7 +9,7 @@ let _db
 const connectDB = async (callback) => {
     try {
 
-        if (mode == 'memory'){
+        if (mode == 'test'){
             MongoClientInMemory.connect(uri, (err, db) => {
                 _db = db
                 return callback(err)
