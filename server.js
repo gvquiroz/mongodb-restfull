@@ -1,34 +1,31 @@
-var MongoClient = require('mongodb').MongoClient;
 var express = require('express');
+var app = express();
 var bodyParser = require('body-parser')
 var storeService = require("./app/storage/mongoStorage.js");
 var debug = require('debug')('app');
+const MongoDB = require('./app/db/mongodb')
 
 let config = require('./config/properties.json'); //we load the db location from the JSON files
 let port = 3000;
 
 // config
-var app = express();
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
-// Initialize connection once
-MongoClient.connect(config.DBHost, function(err, database) {
-  if (err) {
-    debug('Error');
-  }
+MongoDB.connectDB(async (err) => {
+  if (err) throw err
+  // Load db & collections
+  db = MongoDB.getDB()
 
-  db = database;
-
-  // Start the application after the database connection is ready
-  app.listen(port);
+  app.listen(port)
   debug('Listening on port: ' + port);
-});
+
+})
+
 
 // Routes
-
 app.post('/:database/:collection/_bulk', function(req, res) {
   debug(req.method + ' ' + req.url);
   var collection = req.params.collection;
@@ -88,3 +85,5 @@ app.post('/:database/:collection/_search', function(req, res) {
   storeService.search(db.db(database), response , collection, req.body.query);
 
 });
+
+module.exports = app; // for testing
