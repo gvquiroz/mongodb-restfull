@@ -5,7 +5,7 @@ var storeService = require("./app/storage/mongoStorage.js");
 var debug = require('debug')('app');
 const MongoDB = require('./app/db/mongodb')
 
-let config = require('./config/properties.json'); //we load the db location from the JSON files
+let config = require('./config/properties.json') //we load the db location from the JSON files
 let port = 3000;
 
 // config
